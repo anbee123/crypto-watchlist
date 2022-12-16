@@ -6,20 +6,21 @@ import './App.css';
 import { makeStyles} from 'tss-react/mui'
 
 
-function App() {
-  const useStyles = makeStyles(()=> ({
+const useStyles = makeStyles()(() => {
+  return {
     App: {
-backgroundColor: "#14161a",
-color: "white",
-minHeight: "100vh",
-    }
-  }));
-const classes = useStyles()
+      backgroundColor: 'black',
+      color: 'white',
+    },
+  };
+});
 
-
-
+function App() {
+  const { classes } = useStyles();
+  
 
   return (
+    
     <div className="App">
       < BrowserRouter >
         <div className= {classes.App}>
