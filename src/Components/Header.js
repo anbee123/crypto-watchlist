@@ -36,13 +36,14 @@ const useStyles = makeStyles()(() => {
     <Toolbar>
         <Typography 
        onClick={()=>navigate("/")}
-        className={classes.title}> Crypto Tracker </Typography>
+        className={classes.title}
+        variant='h6'> Crypto Tracker </Typography>
         <Select 
         variant="outlined"
         style={{
             width:100,
             height: 40,
-            marginLeft: 15,
+            marginRight: 15,
         }}>
 <MenuItem value={'USD'}>USD</MenuItem>
 <MenuItem value={'EUR'}>EUR</MenuItem>
