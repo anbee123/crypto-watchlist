@@ -3,6 +3,8 @@ import { AppBar, Toolbar, Typography, Select, MenuItem } from "@mui/material";
 import { Container } from "@mui/system";
 import React from "react";
 import { makeStyles} from 'tss-react/mui'
+import {useNavigate} from "react-router-dom"
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 const useStyles = makeStyles()(() => {
     return {
@@ -19,11 +21,22 @@ const useStyles = makeStyles()(() => {
 
  const Header =() =>{
     const { classes } = useStyles();
+    const navigate = useNavigate();
+    const darkTheme = createTheme({
+        palette: {
+          mode: 'dark',
+        },
+      });
+
+
     return (
+        <ThemeProvider theme={darkTheme}>
 <AppBar color= 'transparent' position='static'>
 <Container>
     <Toolbar>
-        <Typography className={classes.title}> Crypto Tracker </Typography>
+        <Typography 
+       onClick={()=>navigate("/")}
+        className={classes.title}> Crypto Tracker </Typography>
         <Select 
         variant="outlined"
         style={{
@@ -37,6 +50,7 @@ const useStyles = makeStyles()(() => {
     </Toolbar>
 </Container>
 </AppBar>
+</ThemeProvider>
     )
  }
  export default Header;

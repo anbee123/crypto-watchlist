@@ -25,7 +25,7 @@ function App() {
       < BrowserRouter >
         <div className= {classes.App}>
           <Header />
-          <Routes>
+        <Routes>
           <Route path="/" element={<Homepage />} exact />
           <Route path="/coins/:id" element={<CoinPage />} />
           </Routes>
