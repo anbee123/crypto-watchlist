@@ -5,6 +5,7 @@ import React from "react";
 import { makeStyles} from 'tss-react/mui'
 import {useNavigate} from "react-router-dom"
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { CryptoState } from "../CryptoContext";
 
 const useStyles = makeStyles()(() => {
     return {
@@ -22,6 +23,8 @@ const useStyles = makeStyles()(() => {
  const Header =() =>{
     const { classes } = useStyles();
     const navigate = useNavigate();
+    const {currency, setCurrency } = CryptoState()
+    console.log(currency)
     const darkTheme = createTheme({
         palette: {
           mode: 'dark',
@@ -44,9 +47,11 @@ const useStyles = makeStyles()(() => {
             width:100,
             height: 40,
             marginRight: 15,
-        }}>
+        }}
+        value={currency}
+        onChange={(e)=> setCurrency(e.target.value)}>
 <MenuItem value={'USD'}>USD</MenuItem>
-<MenuItem value={'EUR'}>EUR</MenuItem>
+<MenuItem value={'VND'}>VND</MenuItem>
         </Select>
     </Toolbar>
 </Container>
