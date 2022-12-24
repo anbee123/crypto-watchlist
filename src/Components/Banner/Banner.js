@@ -2,6 +2,7 @@
 import { Typography } from '@mui/material';
 import { Container } from '@mui/system';
 import { makeStyles} from 'tss-react/mui'
+import Carousel from './Carousel';
 
 
 const useStyles = makeStyles()(() => {
@@ -10,11 +11,19 @@ const useStyles = makeStyles()(() => {
         backgroundImage: 'url(./bannerphto.jpeg)',
       },
       bannerContent: {
-        height: 400,
+        height: 520,
     display: 'flex',
     flexDirection: 'column',
     paddingTop: 25,
     justifyContent: 'space-around',        
+
+      },
+      tagline: {
+        display: 'flex',
+        height: '40%',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        textAlign: 'center',
 
       }
     };
@@ -35,7 +44,17 @@ const Banner = ()=>{
                 }} >
                   Crypto Tracker
                 </Typography>
+                <Typography 
+                variant= 'subtitle2'
+                style={{
+                  color: 'darkgrey',
+                  textTransform: 'capitalize',
+                  fontFamily: 'Montserrat'
+                }}>
+                  Get all the info regarding your favorite crypto currency
+                </Typography>
               </div>
+<Carousel />
             </Container>
         </div>
     )
