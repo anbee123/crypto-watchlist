@@ -4,16 +4,19 @@ import { CoinList } from "../../config/api";
 import { CryptoState } from "../../CryptoContext";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { Container } from "@mui/system";
-import { LinearProgress, Table, TableContainer, TableHead, TextField, Typography, TableRow, TableCell, TableBody } from "@mui/material";
-import { classnames } from "tss-react/tools/classnames";
-import { useNavigate } from "react-router-dom";
+import { LinearProgress, Table, TableContainer, TableHead, TextField, Typography, TableRow, TableCell, TableBody, makeStyles } from "@mui/material";
 
+import { useNavigate } from "react-router-dom";
 
 const CoinsTable = () => {
     const [coins, setCoins] = useState([])
+
     const [loading, setLoading] = useState(false);
     const [search, setSearch] = useState()
+    const navigate= useNavigate()
 
+
+   
     const { currency } = CryptoState()
     const fetchCoins = async () => {
         setLoading(true)
@@ -38,6 +41,8 @@ const CoinsTable = () => {
             coin.symbol.toLowercase().includes(search)
         ))
     }
+    const useStyles = makeStyles(()=> ({}));
+    const classes = useStyles();
 
     return (
 
@@ -78,7 +83,7 @@ const CoinsTable = () => {
                             <TableBody>
                             {handleSearch().map((row)=>{
                                 const profit = row.price_change_percentage_24h > 0;
-                                const navigate = useNavigate();
+                               
                                 function handleClick() {
                                     navigate(`/coins/${row.id}`)
                                   }
@@ -87,7 +92,7 @@ const CoinsTable = () => {
                                     <TableRow 
                         
                                     onClick={handleClick}
-                                    className={classnames.row}
+                                    className={classes.row}
                                     key={row.name}
                                     ></TableRow>
                                 )
