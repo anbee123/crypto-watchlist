@@ -5,43 +5,42 @@ import { CryptoState } from "../../CryptoContext";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { Container } from "@mui/system";
 import { LinearProgress, Table, TableContainer, TableHead, TextField, Typography, TableRow, TableCell, TableBody, makeStyles } from "@mui/material";
-
+import { makeStyles} from 'tss-react/mui'
 import { useNavigate } from "react-router-dom";
 
 const CoinsTable = () => {
-    const [coins, setCoins] = useState([])
+    const [coins, setCoins] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
 
-    const [loading, setLoading] = useState(false);
-    const [search, setSearch] = useState()
-    const navigate= useNavigate()
-
-
-   
-    const { currency } = CryptoState()
-    const fetchCoins = async () => {
-        setLoading(true)
-        const { data } = await axios.get(CoinList(currency))
-
-        setCoins(data)
-        setLoading(false)
+  const { currency, symbol } = CryptoState();
+  const useStyles = makeStyles()(() => {
+    return {
+        row: {
+            backgroundColor: "#16171a",
+            cursor: "pointer",
+            "&:hover": {
+              backgroundColor: "#131111",
+            },
+            fontFamily: "Montserrat",
+        },
+        pagination: {
+            "& .MuiPaginationItem-root": {
+              color: "gold",
+            },
+        }
     };
-    console.log(coins)
-    useEffect(() => {
-        fetchCoins();
-    }, [currency]);
+  });
+    const navigate = useNavigate()
+
     const darkTheme = createTheme({
         palette: {
             mode: 'dark',
         },
     });
-   
-    const handleSearch = () => {
-        return coins.filter((coin)=> (
-            coin.name.toLowercase().includes(search) || 
-            coin.symbol.toLowercase().includes(search)
-        ))
-    }
-    const useStyles = makeStyles(()=> ({}));
+
+
     const classes = useStyles();
 
     return (
@@ -81,22 +80,31 @@ const CoinsTable = () => {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                            {handleSearch().map((row)=>{
-                                const profit = row.price_change_percentage_24h > 0;
-                               
-                                function handleClick() {
-                                    navigate(`/coins/${row.id}`)
-                                  }
-                                return (
-                                    
-                                    <TableRow 
-                        
-                                    onClick={handleClick}
-                                    className={classes.row}
-                                    key={row.name}
-                                    ></TableRow>
-                                )
-                            })}
+                                {handleSearch().map((row) => {
+                                    const profit = row.price_change_percentage_24h > 0;
+
+                    
+                                    return (
+
+                                        <TableRow
+
+                                            onClick={()=>navigate(`/coins/${row.id}`)}
+                                            className={classes.row}
+                                            key={row.name}
+                                        >
+                                            <TableCell 
+                                            component="th" 
+                                            scope="row"
+                                            style={{
+                                                display:"flex",
+                                                gap: 15,
+                                            }}
+
+                                            ></TableCell>
+
+                                        </TableRow>
+                                    )
+                                })}
                             </TableBody>
                         </Table>
                     )}
