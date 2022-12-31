@@ -2,22 +2,39 @@ import { LinearProgress, TableContainer, TextField, Typography, Table, TableHead
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { Container } from '@mui/system';
 import axios from "axios";
-import { useEffect, useState, useStyles } from "react";
+import { useEffect, useState } from "react";
 import { CoinList } from "../../config/api";
 import { CryptoState } from "../../CryptoContext";
 import { useNavigate } from "react-router-dom"
-import usePagination from '@mui/material/usePagination';
+import Pagination from '@mui/material/Pagination';
+import { makeStyles } from 'tss-react/mui'
+
 
 
 
 export function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
-  
+  const useStyles = makeStyles()(() => {
+    return {
+        row: {
+            backgroundColor: "#16171a",
+            cursor: "pointer",
+            "&:hover": {
+              backgroundColor: "#131111",
+            },
+            fontFamily: "Montserrat",
+          },
+          pagination: {
+            "& .MuiPaginationItem-root": {
+              color: "gold",
+            },
+          },
+  }});
 
 const CoinsTable = () => {
     const [coins, setCoins] = useState([]);
-    const [loading, setLoading] = useState([false]);
+    const [loading, setLoading] = useState(false);
     const [search, setSearch] = useState();
     const [page, setPage] = useState(1);
     
@@ -26,7 +43,7 @@ const CoinsTable = () => {
     const { currency, symbol } = CryptoState();
     const classes = useStyles();
     const navigate = useNavigate();
-    const Pagination= usePagination();
+    // const Pagination= usePagination();
 
     const fetchCoins = async () => {
         setLoading(true);
