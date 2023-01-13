@@ -32,10 +32,11 @@ export function numberWithCommas(x) {
           },
   }});
 
+
 const CoinsTable = () => {
     const [coins, setCoins] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [search, setSearch] = useState();
+    const [search, setSearch] = useState("");
     const [page, setPage] = useState(1);
     
   
@@ -48,7 +49,7 @@ const CoinsTable = () => {
     const fetchCoins = async () => {
         setLoading(true);
         const { data } = await axios.get(CoinList(currency));
-        console.log(data);
+       
     
         setCoins(data);
         setLoading(false);
@@ -65,13 +66,14 @@ const CoinsTable = () => {
         },
     });
     const handleSearch = () => {
+      
         return coins.filter(
           (coin) =>
             coin.name.toLowerCase().includes(search) ||
             coin.symbol.toLowerCase().includes(search)
         );
       };
-    
+
 
     return (
         <ThemeProvider theme={darkTheme}>
@@ -117,7 +119,9 @@ const CoinsTable = () => {
                 {handleSearch()
                   .slice((page - 1) * 10, (page - 1) * 10 + 10)
                   .map((row) => {
+                    
                     const profit = row.price_change_percentage_24h > 0;
+                  
                     return (
                       <TableRow
                         onClick={() => navigate(`/coins/${row.id}`)}
@@ -132,6 +136,7 @@ const CoinsTable = () => {
                             gap: 15,
                           }}
                         >
+                
                           <img
                             src={row?.image}
                             alt={row.name}
@@ -148,6 +153,7 @@ const CoinsTable = () => {
                               }}
                             >
                               {row.symbol}
+                              
                             </span>
                             <span style={{ color: "darkgrey" }}>
                               {row.name}
