@@ -8,10 +8,9 @@ This project is about the list of multiple cryptocurrencies, so user can easily 
 ![](public/screenshot/pic3.png)
 
 ## Technologies Used
-* React JS
-* API
-* Material UI
-* Chart JS
+- [React JS](https://reactjs.org/)
+- [Material UI](https://v4.mui.com/)
+- [Chart JS](https://reactchartjs.github.io/react-chartjs-2/#/)
 
 ## Live link
 
