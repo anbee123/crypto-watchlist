@@ -9,7 +9,7 @@ import { makeStyles} from 'tss-react/mui'
 const useStyles = makeStyles()(() => {
   return {
     App: {
-      backgroundColor: 'black',
+      backgroundColor: '#131111',
       color: 'white',
     },
   };
