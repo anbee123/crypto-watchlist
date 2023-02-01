@@ -3,8 +3,8 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { Container } from '@mui/system';
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { CoinList } from "../../config/api";
-import { CryptoState } from "../../CryptoContext";
+import { CoinList } from "../config/api";
+import { CryptoState } from "../CryptoContext";
 import { useNavigate } from "react-router-dom"
 import Pagination from '@mui/material/Pagination';
 import { makeStyles } from 'tss-react/mui'
@@ -13,85 +13,86 @@ import { makeStyles } from 'tss-react/mui'
 
 
 export function numberWithCommas(x) {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  }
-  const useStyles = makeStyles({
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+const useStyles = makeStyles()({
 
-        row: {
-            backgroundColor: "#16171a",
-            cursor: "pointer",
-            '&:hover': {
-              backgroundColor: "#131111",
-            },
-            fontFamily: "Montserrat",
-          },
-          pagination: {
-            '& .MuiPaginationItem-root': {
-              color: "white",
-            },
-          
-  }});
+  row: {
+    backgroundColor: "#16171a",
+    cursor: "pointer",
+    '&:hover': {
+      backgroundColor: "#131111",
+    },
+    fontFamily: "Montserrat",
+  },
+  pagination: {
+    '& .MuiPaginationItem-root': {
+      color: "white",
+    },
+
+  }
+});
 
 
 const CoinsTable = () => {
-    const [coins, setCoins] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [search, setSearch] = useState("");
-    const [page, setPage] = useState(1);
-    
-  
+  const [coins, setCoins] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
 
-    const { currency, symbol } = CryptoState();
-    const classes = useStyles();
-    const navigate = useNavigate();
-    // const Pagination= usePagination();
 
-    const fetchCoins = async () => {
-        setLoading(true);
-        const { data } = await axios.get(CoinList(currency));
-       
-    
-        setCoins(data);
-        setLoading(false);
-      };
-    
-      useEffect(() => {
-        fetchCoins();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, [currency]);
 
-    const darkTheme = createTheme({
-        palette: {
-            mode: 'dark',
-        },
-    });
-    const handleSearch = () => {
-      
-        return coins.filter(
-          (coin) =>
-            coin.name.toLowerCase().includes(search) ||
-            coin.symbol.toLowerCase().includes(search)
-        );
-      };
-      
+  const { currency, symbol } = CryptoState();
+  const { classes } = useStyles();
+  const navigate = useNavigate();
+  // const Pagination= usePagination();
 
-    return (
-        <ThemeProvider theme={darkTheme}>
-            <Container style={{ textAlign: 'center' }}>
-                <Typography
-                    variant="h4"
-                    style={{ margin: 18, fontFamily: "Montserrat" }}
-                >
-                    Cryptocurrency prices by market Cap
-                </Typography>
-                <TextField
-                    label="search for a crypto currency.."
-                    variant='outlined'
-                    style={{ marginBottom: 20, width: " 100%" }}
-                    onChange={(e)=>setSearch(e.target.value)}
+  const fetchCoins = async () => {
+    setLoading(true);
+    const { data } = await axios.get(CoinList(currency));
 
-                />
-                
+
+    setCoins(data);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchCoins();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currency]);
+
+  const darkTheme = createTheme({
+    palette: {
+      mode: 'dark',
+    },
+  });
+  const handleSearch = () => {
+
+    return coins.filter(
+      (coin) =>
+        coin.name.toLowerCase().includes(search) ||
+        coin.symbol.toLowerCase().includes(search)
+    );
+  };
+
+
+  return (
+    <ThemeProvider theme={darkTheme}>
+      <Container style={{ textAlign: 'center' }}>
+        <Typography
+          variant="h4"
+          style={{ margin: 18, fontFamily: "Montserrat" }}
+        >
+          Cryptocurrency prices by market Cap
+        </Typography>
+        <TextField
+          label="search for a crypto currency.."
+          variant='outlined'
+          style={{ marginBottom: 20, width: " 100%" }}
+          onChange={(e) => setSearch(e.target.value)}
+
+        />
+
         <TableContainer component={Paper}>
           {loading ? (
             <LinearProgress style={{ backgroundColor: "gold" }} />
@@ -119,9 +120,9 @@ const CoinsTable = () => {
                 {handleSearch()
                   .slice((page - 1) * 10, (page - 1) * 10 + 10)
                   .map((row) => {
-                    
+
                     const profit = row.price_change_percentage_24h > 0;
-                  
+
                     return (
                       <TableRow
                         onClick={() => navigate(`/coins/${row.id}`)}
@@ -136,7 +137,7 @@ const CoinsTable = () => {
                             gap: 15,
                           }}
                         >
-                
+
                           <img
                             src={row?.image}
                             alt={row.name}
@@ -153,7 +154,7 @@ const CoinsTable = () => {
                               }}
                             >
                               {row.symbol}
-                              
+
                             </span>
                             <span style={{ color: "darkgrey" }}>
                               {row.name}
@@ -202,10 +203,10 @@ const CoinsTable = () => {
             window.scroll(0, 450);
           }}
         />
-            </Container>
+      </Container>
 
-        </ThemeProvider>
+    </ThemeProvider>
 
-    )
+  )
 }
 export default CoinsTable;

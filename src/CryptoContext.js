@@ -2,7 +2,7 @@ import React, { useState, createContext, useContext, useEffect } from "react";
 
 const Crypto = createContext()
  const CryptoContext =({children})=>{
-    const [currency, setCurrency] = useState("EUR")
+    const [currency, setCurrency] = useState("VND")
     const [symbol, setSymbol]=useState("₫")
     useEffect(()=>{
       if (currency === "VND") setSymbol("₫");
